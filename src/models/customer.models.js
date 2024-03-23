@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../utils/sequelize");
-const User = require("./users.models");
+const User = require("./user.models");
 
 const Customer = sequelize.define(
   "Customer",
@@ -28,12 +28,12 @@ const Customer = sequelize.define(
       unique: true,
     },
     address: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
   },
   {
-    tableName: "customers",
+    tableName: "customer",
     freezeTableName: true,
     timestamps: true,
   }
