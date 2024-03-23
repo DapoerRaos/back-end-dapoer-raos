@@ -1,7 +1,9 @@
-const userSeeders = require("./users.seeders");
-const customerSeeders = require("./customers.seeders");
+const userSeeders = require("./user.seeders");
+const customerSeeders = require("./customer.seeders");
+const categorySeeders = require("./category.seeders");
 
 module.exports = {
   userSeeders,
   customerSeeders,
+  categorySeeders,
 };
