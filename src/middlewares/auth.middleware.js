@@ -1,6 +1,6 @@
 const { verify } = require("jsonwebtoken");
 const { SECRET_KEY } = require("../config");
-const { usersServices } = require("../services");
+const { userServices } = require("../services");
 
 const authenticate = async (req, res, next) => {
   const token = req.cookies.token;
@@ -9,6 +9,7 @@ const authenticate = async (req, res, next) => {
   try {
     user = verify(token, SECRET_KEY);
   } catch (error) {
+    res.clearCookie("token");
     res.status(401).json({
       status: "Failed",
       message: "Invalid or expired token",
@@ -16,7 +17,7 @@ const authenticate = async (req, res, next) => {
     return;
   }
 
-  const getUser = await usersServices.getUserById(user.id);
+  const getUser = await userServices.getUserById(user.id);
   if (!getUser) {
     res.status(404).json({
       status: "Failed",
@@ -40,7 +41,7 @@ const authorize = (...roles) => {
       return;
     }
 
-    const isRoleValid = roles.includes(userData.roles);
+    const isRoleValid = roles.includes(userData.role);
 
     if (!isRoleValid) {
       res.status(403).json({
