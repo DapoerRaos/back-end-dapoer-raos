@@ -1,9 +1,15 @@
 const { validationResult } = require("express-validator");
 const logger = require("../../utils/logger");
 const authRequirements = require("./auth.requirements");
+const customersRequirements = require("./customers.requirements");
+const productRequirements = require("./product.requirements");
+const categoryRequirements = require("./category.requirements");
 
 const requirements = {
   ...authRequirements,
+  ...customersRequirements,
+  ...productRequirements,
+  ...categoryRequirements,
 };
 
 function validate(validations) {
