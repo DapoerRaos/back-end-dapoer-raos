@@ -1,7 +1,11 @@
-const usersRepositories = require("./users.repositories");
-const customersRepositories = require("./customers.repositories");
+const userRepositories = require("./user.repositories");
+const customerRepositories = require("./customer.repositories");
+const productRepositories = require("./product.repositories");
+const categoryRepositories = require("./category.repositories");
 
 module.exports = {
-  usersRepositories,
-  customersRepositories,
+  userRepositories,
+  customerRepositories,
+  productRepositories,
+  categoryRepositories,
 };
