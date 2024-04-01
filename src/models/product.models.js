@@ -26,7 +26,7 @@ const Product = sequelize.define(
       type: DataTypes.TEXT,
     },
     price: {
-      type: DataTypes.DECIMAL(10, 2),
+      type: DataTypes.FLOAT(10, 2),
       allowNull: false,
     },
     stock: {
