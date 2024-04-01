@@ -1,4 +1,4 @@
-const { verify } = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = require("../config");
 const { userServices } = require("../services");
 
@@ -7,7 +7,7 @@ const authenticate = async (req, res, next) => {
   let user;
 
   try {
-    user = verify(token, SECRET_KEY);
+    user = jwt.verify(token, SECRET_KEY);
   } catch (error) {
     res.clearCookie("token");
     res.status(401).json({
