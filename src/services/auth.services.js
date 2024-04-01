@@ -1,10 +1,10 @@
 const { SECRET_KEY } = require("../config");
 const bcrypt = require("bcrypt");
-const { sign } = require("jsonwebtoken");
-const { usersRepositories, customersRepositories } = require("../repositories");
+const jwt = require("jsonwebtoken");
+const { userRepositories, customerRepositories } = require("../repositories");
 
 async function login({ email, password }) {
-  const user = await usersRepositories.getUserByEmail(email);
+  const user = await userRepositories.getUserByEmail(email);
 
   if (!user) {
     throw new Error("Unauthorized");
@@ -23,7 +23,7 @@ async function login({ email, password }) {
     role: user.dataValues.role,
   };
 
-  const token = sign(authUser, SECRET_KEY, { expiresIn: "5h" });
+  const token = jwt.sign(authUser, SECRET_KEY, { expiresIn: "5h" });
 
   return token;
 }
@@ -35,18 +35,30 @@ async function registerCustomer(data) {
     throw new Error("All fields are required");
   }
 
-  const checkEmail = await usersRepositories.getUserByEmail(email);
+  const checkEmail = await userRepositories.getUserByEmail(email);
   if (checkEmail) {
     throw new Error("Email already exists");
   }
 
+  let parshedTelephone;
+  if (telephone) {
+    parshedTelephone = telephone.replace(/^\+62/, "0");
+  }
+
+  const checkTelephone = await customerRepositories.getCustomerByTelephone(
+    parshedTelephone
+  );
+  if (checkTelephone) {
+    throw new Error("Phone Number already used");
+  }
+
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const response = await usersRepositories.createCustomer({
+  const response = await userRepositories.createCustomer({
     email,
     password: hashedPassword,
     fullname,
-    telephone,
+    telephone: parshedTelephone,
     address,
   });
 
