@@ -8,19 +8,19 @@ const cors = require("cors");
 function createServer() {
   const app = express();
 
-  const corsOption = {
-    origin: "*",
-    credentials: true,
-  };
-
-  app.use(cors(corsOption));
-  app.use(express.static("uploads"));
-  app.use(express.urlencoded({ extended: false }));
-  app.use(express.json());
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    })
+  );
   app.use(cookieParser());
+  app.use(express.static("uploads"));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
   app.use(morganMiddleware);
-  app.use(`/${API}`, routes);
   app.use(errorHandler);
+  app.use(`/${API}`, routes);
 
   return app;
 }
