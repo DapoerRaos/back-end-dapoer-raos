@@ -57,7 +57,7 @@ async function addProduct(req, res) {
     const { category_id, name, description, price, stock } = req.body;
     const image_path = req.file ? req.file.filename : "";
     const result = await productServices.addProduct({
-      category_id,
+      category_id: parseInt(category_id),
       name,
       description,
       price: parseFloat(price),
@@ -103,7 +103,7 @@ async function updateProductById(req, res) {
     }
 
     const result = await productServices.updateProductById(req.params.id, {
-      category_id: existingCategoryId,
+      category_id: parseInt(existingCategoryId),
       name: existingName,
       description: existingDescription,
       price: parseFloat(existingPrice),
