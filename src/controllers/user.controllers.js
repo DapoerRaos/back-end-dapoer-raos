@@ -1,4 +1,5 @@
 const { userServices } = require("../services");
+const logger = require("../utils/logger");
 
 async function getUserById(req, res) {
   try {
