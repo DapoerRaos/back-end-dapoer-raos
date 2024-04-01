@@ -21,6 +21,6 @@ const diskStorage = multer.diskStorage({
 const multerMiddleware = multer({
   storage: diskStorage,
   limits: { fileSize: 5000000 },
-}).single("image");
+}).single("image_path");
 
 module.exports = multerMiddleware;
