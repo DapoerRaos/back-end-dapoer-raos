@@ -1,6 +1,25 @@
 const logger = require("../utils/logger");
 const { authServices } = require("../services");
 
+async function registerCustomer(req, res) {
+  const { email, password, fullname, telephone, address } = req.body;
+  try {
+    await authServices.registerCustomer({
+      email,
+      password,
+      fullname,
+      telephone,
+      address,
+    });
+    res.status(201).json({
+      status: "Success",
+      message: "Registrasi Berhasil",
+    });
+  } catch (err) {
+    handleAuthError(err, res);
+  }
+}
+
 async function login(req, res) {
   try {
     const token = await authServices.login(req.body);
@@ -19,20 +38,10 @@ async function login(req, res) {
   }
 }
 
-async function registerCustomer(req, res) {
-  const { email, password, fullname, telephone, address } = req.body;
+async function logout(req, res) {
   try {
-    await authServices.registerCustomer({
-      email,
-      password,
-      fullname,
-      telephone,
-      address,
-    });
-    res.status(201).json({
-      status: "Success",
-      message: "Registrasi Berhasil",
-    });
+    res.clearCookie("token", { httpOnly: true });
+    res.status(200).json({ status: "Success", message: "Logout Berhasil" });
   } catch (err) {
     handleAuthError(err, res);
   }
@@ -75,4 +84,5 @@ function handleAuthError(err, res) {
 module.exports = {
   login,
   registerCustomer,
+  logout,
 };
