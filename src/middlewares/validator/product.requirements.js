@@ -7,7 +7,7 @@ const requirements = {
     body("category_id").notEmpty().isInt(),
     body("name").notEmpty().isString(),
     body("description").optional().isString(),
-    body("price").notEmpty().isDecimal(),
+    body("price").notEmpty().isFloat(),
     body("stock").notEmpty().isInt(),
   ],
   updateProduct: [
