@@ -1,7 +1,13 @@
 const authServices = require("./auth.services");
-const usersServices = require("./users.services");
+const userServices = require("./user.services");
+const customerServices = require("./customer.services");
+const productServices = require("./product.services");
+const categoryServices = require("./category.services");
 
 module.exports = {
   authServices,
-  usersServices,
+  userServices,
+  customerServices,
+  productServices,
+  categoryServices,
 };
