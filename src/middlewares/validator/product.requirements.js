@@ -18,6 +18,7 @@ const requirements = {
     body("price").optional(),
     body("stock").optional(),
   ],
+  updateStock: [param("id").isInt({ min: 1 }), body("stock").isInt({ min: 1 })],
   deleteProduct: [param("id").isInt({ min: 1 })],
 };
 
