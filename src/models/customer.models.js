@@ -33,7 +33,7 @@ const Customer = sequelize.define(
     },
   },
   {
-    tableName: "customer",
+    tableName: "customers",
     freezeTableName: true,
     timestamps: true,
   }
