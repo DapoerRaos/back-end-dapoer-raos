@@ -26,11 +26,18 @@ const Product = sequelize.define(
       type: DataTypes.TEXT,
     },
     price: {
-      type: DataTypes.FLOAT(10, 2),
+      type: DataTypes.DOUBLE(10, 2),
       allowNull: false,
+      validate: {
+        min: 0,
+      },
     },
     stock: {
       type: DataTypes.INTEGER,
+      defaultValue: 0,
+      validate: {
+        min: 0,
+      },
     },
     image_path: {
       type: DataTypes.STRING,
@@ -38,7 +45,7 @@ const Product = sequelize.define(
     },
   },
   {
-    tableName: "product",
+    tableName: "products",
     freezeTableName: true,
     timestamps: true,
   }
