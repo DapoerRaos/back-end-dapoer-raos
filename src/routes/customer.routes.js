@@ -8,14 +8,7 @@ const { validate, requirements } = validator;
 
 router
   .route("/")
-  .get(
-    [authMiddleware.authenticate, authMiddleware.authorize(ROLES.ADMIN)],
-    customerControllers.getCustomers
-  )
-  .get([authMiddleware.authenticate], customerControllers.getCustomerById);
-
-router
-  .route("/")
+  .get([authMiddleware.authenticate], customerControllers.getCustomerById)
   .put(
     [
       authMiddleware.authenticate,
@@ -23,6 +16,20 @@ router
       validate(requirements.updateCustomer),
     ],
     customerControllers.updateCustomerById
+  );
+
+router
+  .route("/:id")
+  .get(
+    [authMiddleware.authenticate],
+    customerControllers.getCustomerDetailById
+  );
+
+router
+  .route("/all")
+  .get(
+    [authMiddleware.authenticate, authMiddleware.authorize(ROLES.ADMIN)],
+    customerControllers.getCustomers
   );
 
 module.exports = router;
