@@ -10,6 +10,8 @@ const { ROLES } = require("../constants");
 const router = Router();
 const { validate, requirements } = validator;
 
+router.route("/stock").put(productControllers.decreaseStockWhenCheckout);
+
 router
   .route("/")
   .get([validate(requirements.getProducts)], productControllers.getProducts)
@@ -37,6 +39,14 @@ router
       validate(requirements.updateProduct),
     ],
     productControllers.updateProductById
+  )
+  .put(
+    [
+      authMiddleware.authenticate,
+      authMiddleware.authorize(ROLES.ADMIN),
+      validate(requirements.updateStock),
+    ],
+    productControllers.updateStockById
   )
   .delete(
     [
