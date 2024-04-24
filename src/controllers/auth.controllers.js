@@ -2,7 +2,8 @@ const logger = require("../utils/logger");
 const { authServices } = require("../services");
 
 async function registerCustomer(req, res) {
-  const { email, password, fullname, telephone, address } = req.body;
+  const { email, password, fullname, telephone, address, city, postal_code } =
+    req.body;
   try {
     await authServices.registerCustomer({
       email,
@@ -10,6 +11,8 @@ async function registerCustomer(req, res) {
       fullname,
       telephone,
       address,
+      city,
+      postal_code,
     });
     res.status(201).json({
       status: "Success",
