@@ -1,9 +1,10 @@
 const { productRepositories } = require("../repositories");
 
-async function getProducts({ page = 1 }) {
+async function getProducts({ page = 1, keyword = "" }) {
   const limit = 8;
   const products = await productRepositories.getProducts({
     page,
+    keyword,
   });
 
   if (!products.rows.length) {
@@ -71,6 +72,15 @@ async function updateProductById(id, data) {
   return product;
 }
 
+async function updateStockById(id, stock) {
+  if (!id) {
+    throw new Error("Invalid Id");
+  }
+
+  const product = await productRepositories.updateStockById(id, stock);
+  return product;
+}
+
 async function deleteProductById(id) {
   if (!id) {
     throw new Error("Invalid Id");
@@ -81,10 +91,20 @@ async function deleteProductById(id) {
   return product;
 }
 
+async function decreaseStockWhenCheckout(productStock) {
+  if (productStock.length === 0) {
+    throw new Error("Products cannot be empty");
+  }
+
+  return await productRepositories.decreaseStockWhenCheckout(productStock);
+}
+
 module.exports = {
   getProducts,
   getProductById,
   addProduct,
   updateProductById,
+  updateStockById,
   deleteProductById,
+  decreaseStockWhenCheckout,
 };
