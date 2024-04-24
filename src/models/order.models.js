@@ -22,18 +22,25 @@ const Order = sequelize.define(
       allowNull: false,
     },
     status: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(25),
+      allowNull: false,
+    },
+    shipping_status: {
+      type: DataTypes.STRING(25),
+    },
+    shipping_type: {
+      type: DataTypes.STRING(20),
       allowNull: false,
     },
     payment_method: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(25),
       allowNull: false,
     },
     va_number: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(30),
     },
     bank: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(10),
     },
     payment_date: {
       type: DataTypes.STRING,
