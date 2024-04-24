@@ -11,9 +11,9 @@ const createUser = (email, password, role) => {
 };
 
 createUser("dapoerraos@gmail.com", "dapoerraoswenak", "admin");
-createUser("customer1@gmail.com", "customer123", "customer");
-createUser("customer2@gmail.com", "customer123", "customer");
-createUser("customer3@gmail.com", "customer123", "customer");
+createUser("aswangga27@gmail.com", "customer123", "customer");
+createUser("leandra14@gmail.com", "customer123", "customer");
+createUser("raulaksal@gmail.com", "customer123", "customer");
 
 const seedUsers = async () => {
   try {
