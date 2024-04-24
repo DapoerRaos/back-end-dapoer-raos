@@ -124,6 +124,27 @@ async function updateProductById(req, res) {
   }
 }
 
+async function updateStockById(req, res) {
+  try {
+    const { stock } = req.body;
+    const result = await productServices.updateStockById(
+      req.params.id,
+      parseInt(stock)
+    );
+    res.status(200).json({
+      status: "Success",
+      message: "Produk Berhasil Diperbarui",
+      data: result,
+    });
+  } catch (err) {
+    logger.error({ status: 500, error: err });
+    res.status(500).json({
+      status: "Failed",
+      message: "Internal server error",
+    });
+  }
+}
+
 async function deleteProductById(req, res) {
   try {
     const result = await productServices.deleteProductById(req.params.id);
@@ -141,10 +162,38 @@ async function deleteProductById(req, res) {
   }
 }
 
+async function decreaseStockWhenCheckout(req, res) {
+  try {
+    const { stock_products } = req.body;
+
+    const productStock = stock_products.map((product) => ({
+      product_id: product.product_id,
+      stock: product.stock,
+    }));
+
+    const result = await productServices.decreaseStockWhenCheckout(
+      productStock
+    );
+    res.status(200).json({
+      status: "Success",
+      message: "Stock Berkurang",
+      data: result,
+    });
+  } catch (err) {
+    logger.error({ status: 500, error: err });
+    res.status(500).json({
+      status: "Failed",
+      message: "Internal server error",
+    });
+  }
+}
+
 module.exports = {
   getProducts,
   getProductById,
   addProduct,
   updateProductById,
+  updateStockById,
   deleteProductById,
+  decreaseStockWhenCheckout,
 };
