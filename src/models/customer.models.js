@@ -31,6 +31,14 @@ const Customer = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    city: {
+      type: DataTypes.STRING(30),
+      allowNull: false,
+    },
+    postal_code: {
+      type: DataTypes.STRING(5),
+      allowNull: false,
+    },
   },
   {
     tableName: "customers",
