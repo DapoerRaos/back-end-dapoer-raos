@@ -41,18 +41,27 @@ async function getCustomerById(req, res) {
   }
 }
 
-async function updateCustomerById(req, res) {
-  const id = req.userData.id;
-  const { email, password, fullname, telephone, address } = req.body;
-
+async function getCustomerDetailById(req, res) {
   try {
-    await customerServices.updateCustomerById(id, {
-      email,
-      password,
-      fullname,
-      telephone,
-      address,
+    const result = await customerServices.getCustomerDetailById(req.params.id);
+    res.status(200).json({
+      status: "Success",
+      data: result,
     });
+  } catch (err) {
+    logger.error({ status: 500, error: err });
+    res.status(500).json({
+      status: "Failed",
+      message: "Internal server error",
+    });
+  }
+}
+
+async function updateCustomerById(req, res) {
+  try {
+    const id = req.userData.id;
+
+    await customerServices.updateCustomerById(id, req.body);
     res.status(200).json({
       status: "Success",
       message: "Data Berhasil Diperbarui",
@@ -89,5 +98,6 @@ async function updateCustomerById(req, res) {
 module.exports = {
   getCustomers,
   getCustomerById,
+  getCustomerDetailById,
   updateCustomerById,
 };
