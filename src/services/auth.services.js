@@ -3,35 +3,19 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { userRepositories, customerRepositories } = require("../repositories");
 
-async function login({ email, password }) {
-  const user = await userRepositories.getUserByEmail(email);
-
-  if (!user) {
-    throw new Error("Unauthorized");
-  }
-
-  const passwordMatch = await bcrypt.compare(
-    password,
-    user.dataValues.password
-  );
-  if (!passwordMatch) {
-    throw new Error("Unauthorized");
-  }
-
-  const authUser = {
-    id: user.dataValues.id,
-    role: user.dataValues.role,
-  };
-
-  const token = jwt.sign(authUser, SECRET_KEY, { expiresIn: "5h" });
-
-  return token;
-}
-
 async function registerCustomer(data) {
-  const { email, password, fullname, telephone, address } = data;
+  const { email, password, fullname, telephone, address, city, postal_code } =
+    data;
 
-  if (!email || !password || !fullname || !telephone || !address) {
+  if (
+    !email ||
+    !password ||
+    !fullname ||
+    !telephone ||
+    !address ||
+    !city ||
+    !postal_code
+  ) {
     throw new Error("All fields are required");
   }
 
@@ -60,9 +44,36 @@ async function registerCustomer(data) {
     fullname,
     telephone: parshedTelephone,
     address,
+    city,
+    postal_code,
   });
 
   return response;
+}
+
+async function login({ email, password }) {
+  const user = await userRepositories.getUserByEmail(email);
+
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+
+  const passwordMatch = await bcrypt.compare(
+    password,
+    user.dataValues.password
+  );
+  if (!passwordMatch) {
+    throw new Error("Unauthorized");
+  }
+
+  const authUser = {
+    id: user.dataValues.id,
+    role: user.dataValues.role,
+  };
+
+  const token = jwt.sign(authUser, SECRET_KEY, { expiresIn: "12h" });
+
+  return token;
 }
 
 module.exports = {
