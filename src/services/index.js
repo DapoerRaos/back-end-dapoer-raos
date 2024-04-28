@@ -3,6 +3,10 @@ const userServices = require("./user.services");
 const customerServices = require("./customer.services");
 const productServices = require("./product.services");
 const categoryServices = require("./category.services");
+const cartServices = require("./cart.services");
+const cartDetailServices = require("./cartDetail.services");
+const orderServices = require("./order.services");
+const orderItemServices = require("./orderItem.services");
 
 module.exports = {
   authServices,
@@ -10,4 +14,8 @@ module.exports = {
   customerServices,
   productServices,
   categoryServices,
+  cartServices,
+  cartDetailServices,
+  orderServices,
+  orderItemServices,
 };
