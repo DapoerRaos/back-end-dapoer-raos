@@ -6,7 +6,7 @@ const { URL } = require("../constants");
 
 async function processOrder(req, res) {
   try {
-    const { order_id, fullname, telephone, products } = req.body;
+    const { order_id, fullname, telephone, shipping_cost, products } = req.body;
 
     const itemDetails = products.map((product) => ({
       id: product.id,
@@ -15,10 +15,12 @@ async function processOrder(req, res) {
       price: product.price,
     }));
 
-    const gross_amount = products.reduce(
+    const totalItemPrice = products.reduce(
       (acc, product) => acc + product.quantity * product.price,
       0
     );
+
+    const gross_amount = totalItemPrice + shipping_cost;
 
     const snap = new midtransClient.Snap({
       isProduction: false,
@@ -28,12 +30,12 @@ async function processOrder(req, res) {
     const parameter = {
       transaction_details: {
         order_id: order_id,
-        gross_amount,
+        gross_amount: gross_amount,
       },
       credit_card: {
         secure: true,
       },
-      item_details: itemDetails,
+      // item_details: itemDetails,
       customer_details: {
         first_name: fullname,
         phone: telephone,
@@ -69,6 +71,7 @@ async function createOrder(req, res) {
       status,
       shipping_status,
       shipping_type,
+      shipping_cost,
       payment_method,
       va_number,
       bank,
@@ -82,6 +85,7 @@ async function createOrder(req, res) {
       status,
       shipping_status,
       shipping_type,
+      shipping_cost,
       payment_method,
       va_number,
       bank,
