@@ -18,6 +18,8 @@ async function getCustomers() {
       "fullname",
       "telephone",
       "address",
+      "city",
+      "postal_code",
     ],
     include: {
       model: userModel,
@@ -38,6 +40,8 @@ async function getCustomerById(id) {
       "fullname",
       "telephone",
       "address",
+      "city",
+      "postal_code",
     ],
     where: {
       user_id: id,
@@ -51,8 +55,34 @@ async function getCustomerById(id) {
   });
 }
 
+async function getCustomerDetailById(id) {
+  return await customerModel.findOne({
+    attributes: [
+      "id",
+      "user_id",
+      [col("User.email"), "email"],
+      [col("User.password"), "password"],
+      "fullname",
+      "telephone",
+      "address",
+      "city",
+      "postal_code",
+    ],
+    where: {
+      id: id,
+    },
+    include: {
+      model: userModel,
+      required: true,
+      attributes: [],
+      as: "User",
+    },
+  });
+}
+
 async function updateCustomerById(id, data) {
-  const { email, password, fullname, telephone, address } = data;
+  const { email, password, fullname, telephone, address, city, postal_code } =
+    data;
 
   await userModel.update(
     {
@@ -71,6 +101,8 @@ async function updateCustomerById(id, data) {
       fullname,
       telephone,
       address,
+      city,
+      postal_code,
     },
     {
       where: {
@@ -84,5 +116,6 @@ module.exports = {
   getCustomerByTelephone,
   getCustomers,
   getCustomerById,
+  getCustomerDetailById,
   updateCustomerById,
 };
