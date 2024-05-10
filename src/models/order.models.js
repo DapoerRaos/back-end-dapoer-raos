@@ -32,6 +32,9 @@ const Order = sequelize.define(
       type: DataTypes.STRING(20),
       allowNull: false,
     },
+    shipping_cost: {
+      type: DataTypes.DOUBLE(10, 2),
+    },
     payment_method: {
       type: DataTypes.STRING(25),
       allowNull: false,
