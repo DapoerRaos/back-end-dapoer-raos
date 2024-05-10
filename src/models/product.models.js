@@ -25,6 +25,10 @@ const Product = sequelize.define(
     description: {
       type: DataTypes.TEXT,
     },
+    weight: {
+      type: DataTypes.DOUBLE(6, 2),
+      allowNull: false,
+    },
     price: {
       type: DataTypes.DOUBLE(10, 2),
       allowNull: false,
