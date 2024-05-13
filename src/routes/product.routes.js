@@ -10,7 +10,13 @@ const { ROLES } = require("../constants");
 const router = Router();
 const { validate, requirements } = validator;
 
-router.route("/stock").put(productControllers.decreaseStockWhenCheckout);
+router
+  .route("/stock")
+  .get(
+    [validate(requirements.getProducts)],
+    productControllers.getProductsStock
+  )
+  .put(productControllers.decreaseStockWhenCheckout);
 
 router
   .route("/")
