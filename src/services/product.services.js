@@ -11,10 +11,16 @@ async function getProducts({ page = 1, keyword = "" }) {
     throw new Error("Not Found");
   }
 
+  let totalStock = 0;
+  products.rows.forEach((product) => {
+    totalStock += product.stock;
+  });
+
   const totalPages = Math.ceil(products.count / limit);
 
   return {
     products: products.rows,
+    totalStock: totalStock,
     pagination: {
       page: page,
       perpage: limit,
@@ -22,6 +28,17 @@ async function getProducts({ page = 1, keyword = "" }) {
       totalPages: totalPages,
     },
   };
+}
+
+async function getProductsStock() {
+  const products = await productRepositories.getProductsStock();
+
+  let totalStock = 0;
+  products.rows.forEach((product) => {
+    totalStock += product.stock;
+  });
+
+  return totalStock;
 }
 
 async function getProductById(id) {
@@ -35,7 +52,8 @@ async function getProductById(id) {
 }
 
 async function addProduct(data) {
-  const { category_id, name, description, price, stock, image_path } = data;
+  const { category_id, name, description, weight, price, stock, image_path } =
+    data;
 
   if (!category_id || !name || !price || !stock || !image_path) {
     throw new Error("Fields are required");
@@ -45,6 +63,7 @@ async function addProduct(data) {
     category_id,
     name,
     description,
+    weight,
     price,
     stock,
     image_path,
@@ -54,7 +73,8 @@ async function addProduct(data) {
 }
 
 async function updateProductById(id, data) {
-  const { category_id, name, description, price, stock, image_path } = data;
+  const { category_id, name, description, weight, price, stock, image_path } =
+    data;
 
   if (!id) {
     throw new Error("Invalid Id");
@@ -64,6 +84,7 @@ async function updateProductById(id, data) {
     category_id,
     name,
     description,
+    weight,
     price,
     stock,
     image_path,
@@ -101,6 +122,7 @@ async function decreaseStockWhenCheckout(productStock) {
 
 module.exports = {
   getProducts,
+  getProductsStock,
   getProductById,
   addProduct,
   updateProductById,
