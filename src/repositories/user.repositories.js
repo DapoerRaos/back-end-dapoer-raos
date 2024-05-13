@@ -13,7 +13,8 @@ async function getUserById(id) {
 }
 
 async function createCustomer(data) {
-  const { email, password, fullname, telephone, address } = data;
+  const { email, password, fullname, telephone, address, city, postal_code } =
+    data;
 
   const addUser = await userModel.create({
     email,
@@ -27,6 +28,8 @@ async function createCustomer(data) {
     fullname,
     telephone,
     address,
+    city,
+    postal_code,
   });
 
   return { addUser, addCustomer };
