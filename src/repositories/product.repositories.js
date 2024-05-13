@@ -18,12 +18,13 @@ async function getProducts({ page, keyword }) {
     },
   ];
 
-  return productModel.findAndCountAll({
+  return await productModel.findAndCountAll({
     attributes: [
       "id",
       [col("Category.name"), "category_name"],
       "name",
       "description",
+      "weight",
       "price",
       "stock",
       "image_path",
@@ -41,14 +42,19 @@ async function getProducts({ page, keyword }) {
   });
 }
 
+async function getProductsStock() {
+  return await productModel.findAndCountAll({ attributes: ["stock"] });
+}
+
 async function getProductById(id) {
-  return productModel.findByPk(id, {
+  return await productModel.findByPk(id, {
     attributes: [
       "id",
       [col("Category.id"), "category_id"],
       [col("Category.name"), "category_name"],
       "name",
       "description",
+      "weight",
       "price",
       "stock",
       "image_path",
@@ -63,12 +69,14 @@ async function getProductById(id) {
 }
 
 async function addProduct(data) {
-  const { category_id, name, description, price, stock, image_path } = data;
+  const { category_id, name, description, weight, price, stock, image_path } =
+    data;
 
-  return productModel.create({
+  return await productModel.create({
     category_id,
     name,
     description,
+    weight,
     price,
     stock,
     image_path,
@@ -76,13 +84,15 @@ async function addProduct(data) {
 }
 
 async function updateProductById(id, data) {
-  const { category_id, name, description, price, stock, image_path } = data;
+  const { category_id, name, description, weight, price, stock, image_path } =
+    data;
 
-  return productModel.update(
+  return await productModel.update(
     {
       category_id,
       name,
       description,
+      weight,
       price,
       stock,
       image_path,
@@ -96,7 +106,7 @@ async function updateProductById(id, data) {
 }
 
 async function updateStockById(id, stock) {
-  return productModel.update(
+  return await productModel.update(
     {
       stock,
     },
@@ -117,7 +127,7 @@ async function deleteProductById(id) {
   );
   fs.unlinkSync(imageDir);
 
-  return productModel.destroy({
+  return await productModel.destroy({
     where: {
       id,
     },
@@ -134,6 +144,7 @@ async function decreaseStockWhenCheckout(productStock) {
 
 module.exports = {
   getProducts,
+  getProductsStock,
   getProductById,
   addProduct,
   updateProductById,
