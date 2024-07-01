@@ -6,12 +6,12 @@ const Cart = sequelize.define(
   "Cart",
   {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(3),
       primaryKey: true,
       autoIncrement: true,
     },
     customer_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(3),
       allowNull: false,
       references: {
         model: Customer,
