@@ -6,12 +6,12 @@ const Product = sequelize.define(
   "Product",
   {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(3),
       primaryKey: true,
       autoIncrement: true,
     },
     category_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(3),
       allowNull: false,
       references: {
         model: Category,
@@ -19,14 +19,14 @@ const Product = sequelize.define(
       },
     },
     name: {
-      type: DataTypes.STRING(60),
+      type: DataTypes.STRING(30),
       allowNull: false,
     },
     description: {
-      type: DataTypes.TEXT,
+      type: DataTypes.TEXT(60),
     },
     weight: {
-      type: DataTypes.DOUBLE(6, 2),
+      type: DataTypes.DOUBLE(5, 2),
       allowNull: false,
     },
     price: {
@@ -37,14 +37,14 @@ const Product = sequelize.define(
       },
     },
     stock: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(3),
       defaultValue: 0,
       validate: {
         min: 0,
       },
     },
     image_path: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(60),
       allowNull: true,
     },
   },
