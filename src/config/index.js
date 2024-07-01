@@ -6,6 +6,9 @@ const config = {
   API: process.env.API_PATH || "api/v1",
   SECRET_KEY: process.env.SECRET_KEY,
   MIDTRANS_SERVER_KEY: process.env.MIDTRANS_SERVER_KEY,
+  RAJAONGKIR_API_KEY: process.env.RAJAONGKIR_API_KEY,
+  APP_MAIL: process.env.APP_MAIL,
+  APP_PASSWORD: process.env.APP_PASSWORD,
 };
 
 module.exports = config;
