@@ -6,12 +6,12 @@ const Customer = sequelize.define(
   "Customer",
   {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(3),
       primaryKey: true,
       autoIncrement: true,
     },
     user_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(3),
       allowNull: false,
       references: {
         model: User,
@@ -19,25 +19,13 @@ const Customer = sequelize.define(
       },
     },
     fullname: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(30),
       allowNull: false,
     },
     telephone: {
       type: DataTypes.STRING(12),
       allowNull: false,
       unique: true,
-    },
-    address: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    city: {
-      type: DataTypes.STRING(30),
-      allowNull: false,
-    },
-    postal_code: {
-      type: DataTypes.STRING(5),
-      allowNull: false,
     },
   },
   {
