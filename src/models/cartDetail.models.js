@@ -7,12 +7,12 @@ const CartDetail = sequelize.define(
   "CartDetail",
   {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(3),
       primaryKey: true,
       autoIncrement: true,
     },
     cart_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(3),
       allowNull: false,
       references: {
         model: Cart,
@@ -20,7 +20,7 @@ const CartDetail = sequelize.define(
       },
     },
     product_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(3),
       allowNull: false,
       references: {
         model: Product,
@@ -28,7 +28,7 @@ const CartDetail = sequelize.define(
       },
     },
     quantity: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(3),
       allowNull: false,
       defaultValue: 1,
     },
