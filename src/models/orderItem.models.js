@@ -7,12 +7,12 @@ const OrderItem = sequelize.define(
   "OrderItem",
   {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(3),
       primaryKey: true,
       autoIncrement: true,
     },
     order_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(22),
       allowNull: false,
       references: {
         model: Order,
@@ -20,7 +20,7 @@ const OrderItem = sequelize.define(
       },
     },
     product_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(3),
       allowNull: false,
       references: {
         model: Product,
@@ -28,7 +28,7 @@ const OrderItem = sequelize.define(
       },
     },
     quantity: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(3),
       allowNull: false,
     },
     total_price: {
