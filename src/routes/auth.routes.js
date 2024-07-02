@@ -16,6 +16,8 @@ router
   .route("/login")
   .post([validate(requirements.login)], authControllers.login);
 
+router.route("/change-password").put(authControllers.changePassword);
+
 router
   .route("/logout")
   .post([authMiddleware.authenticate], authControllers.logout);
