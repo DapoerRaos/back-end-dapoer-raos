@@ -7,6 +7,7 @@ const {
   cartDetailModel,
   orderModel,
   orderItemModel,
+  shippingModel,
 } = require("../models");
 const {
   userSeeders,
@@ -24,6 +25,7 @@ async function migrateTables() {
   await productModel.sync({ force: true });
   await cartModel.sync({ force: true });
   await cartDetailModel.sync({ force: true });
+  await shippingModel.sync({ force: true });
   await orderModel.sync({ force: true });
   await orderItemModel.sync({ force: true });
 }
