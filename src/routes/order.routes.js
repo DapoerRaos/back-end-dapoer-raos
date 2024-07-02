@@ -25,6 +25,13 @@ router
   );
 
 router
+  .route("/date")
+  .get(
+    [authMiddleware.authenticate, authMiddleware.authorize(ROLES.ADMIN)],
+    orderControllers.getOrderByDate
+  );
+
+router
   .route("/customer_id")
   .get(
     [authMiddleware.authenticate, authMiddleware.authorize(ROLES.CUSTOMER)],
