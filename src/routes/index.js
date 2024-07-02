@@ -8,6 +8,8 @@ const cartRoutes = require("./cart.routes");
 const cartDetailRoutes = require("./cartDetail.routes");
 const orderRoutes = require("./order.routes");
 const orderItemRoutes = require("./orderItem.routes");
+const shippingRoutes = require("./shipping.routes");
+const rajaongkirRoutes = require("./rajaOngkir.routes");
 
 const router = Router();
 
@@ -20,5 +22,7 @@ router.use("/carts", cartRoutes);
 router.use("/carts/detail", cartDetailRoutes);
 router.use("/orders", orderRoutes);
 router.use("/orders/items", orderItemRoutes);
+router.use("/shipping", shippingRoutes);
+router.use("/rajaongkir", rajaongkirRoutes);
 
 module.exports = router;
