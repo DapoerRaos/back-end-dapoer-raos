@@ -2,17 +2,17 @@ const logger = require("../utils/logger");
 const { authServices } = require("../services");
 
 async function registerCustomer(req, res) {
-  const { email, password, fullname, telephone, address, city, postal_code } =
-    req.body;
+  // address, city, postal_code
+  const { email, password, fullname, telephone } = req.body;
   try {
     await authServices.registerCustomer({
       email,
       password,
       fullname,
       telephone,
-      address,
-      city,
-      postal_code,
+      // address,
+      // city,
+      // postal_code,
     });
     res.status(201).json({
       status: "Success",
@@ -50,6 +50,19 @@ async function logout(req, res) {
   }
 }
 
+async function changePassword(req, res) {
+  try {
+    const { email, password } = req.body;
+    await authServices.changePassword(email, password);
+    res.status(200).json({
+      status: "Success",
+      message: "Password Berhasil Diganti",
+    });
+  } catch (err) {
+    handleAuthError(err, res);
+  }
+}
+
 function handleAuthError(err, res) {
   if (err.message === "Unauthorized") {
     logger.error({ status: 401, error: err });
@@ -75,6 +88,18 @@ function handleAuthError(err, res) {
       status: "Failed",
       message: "No Hp Sudah Digunakan",
     });
+  } else if (err.message === "Email Tidak Terdaftar") {
+    logger.error({ status: 409, error: err });
+    res.status(409).json({
+      status: "Failed",
+      message: "Email Tidak Terdaftar",
+    });
+  } else if (err.message === "Password Sama") {
+    logger.error({ status: 409, error: err });
+    res.status(409).json({
+      status: "Failed",
+      message: "Password baru tidak boleh sama dengan yang sudah ada",
+    });
   } else {
     logger.error({ status: 500, error: err });
     res.status(500).json({
@@ -87,5 +112,6 @@ function handleAuthError(err, res) {
 module.exports = {
   login,
   registerCustomer,
+  changePassword,
   logout,
 };
