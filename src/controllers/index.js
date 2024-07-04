@@ -7,6 +7,8 @@ const cartControllers = require("./cart.controllers");
 const cartDetailControllers = require("./cartDetail.controllers");
 const orderControllers = require("./order.controllers");
 const orderItemControllers = require("./orderItem.controllers");
+const shippingControllers = require("./shipping.controllers");
+const rajaOngkirControllers = require("./rajaOngkir.controllers");
 
 module.exports = {
   authControllers,
@@ -18,4 +20,6 @@ module.exports = {
   cartDetailControllers,
   orderControllers,
   orderItemControllers,
+  shippingControllers,
+  rajaOngkirControllers,
 };
