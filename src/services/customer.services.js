@@ -32,8 +32,8 @@ async function getCustomerDetailById(id) {
 }
 
 async function updateCustomerById(id, data) {
-  const { email, password, fullname, telephone, address, city, postal_code } =
-    data;
+  // address, city, postal_code
+  const { email, password, fullname, telephone } = data;
 
   const user = await customerRepositories.getCustomerById(id);
 
@@ -71,9 +71,9 @@ async function updateCustomerById(id, data) {
     password: hashPassword,
     fullname: fullname === "" ? user.fullname : fullname,
     telephone: parshedTelephone || user.telephone,
-    address: address === "" ? user.address : address,
-    city: city === "" ? user.city : city,
-    postal_code: postal_code === "" ? user.postal_code : postal_code,
+    // address: address === "" ? user.address : address,
+    // city: city === "" ? user.city : city,
+    // postal_code: postal_code === "" ? user.postal_code : postal_code,
   });
 }
 
