@@ -4,17 +4,17 @@ const jwt = require("jsonwebtoken");
 const { userRepositories, customerRepositories } = require("../repositories");
 
 async function registerCustomer(data) {
-  const { email, password, fullname, telephone, address, city, postal_code } =
-    data;
+  // address, city, postal_code
+  const { email, password, fullname, telephone } = data;
 
   if (
     !email ||
     !password ||
     !fullname ||
-    !telephone ||
-    !address ||
-    !city ||
-    !postal_code
+    !telephone
+    // !address ||
+    // !city ||
+    // !postal_code
   ) {
     throw new Error("All fields are required");
   }
@@ -43,9 +43,9 @@ async function registerCustomer(data) {
     password: hashedPassword,
     fullname,
     telephone: parshedTelephone,
-    address,
-    city,
-    postal_code,
+    // address,
+    // city,
+    // postal_code,
   });
 
   return response;
@@ -76,7 +76,33 @@ async function login({ email, password }) {
   return token;
 }
 
+async function changePassword(email, password) {
+  const user = await userRepositories.getUserByEmail(email);
+
+  if (!user) {
+    throw new Error("Email Tidak Terdaftar");
+  }
+
+  const passwordMatch = await bcrypt.compare(
+    password,
+    user.dataValues.password
+  );
+
+  if (passwordMatch) {
+    throw new Error("Password Sama");
+  }
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const changePassword = await userRepositories.changePassword(
+    email,
+    hashedPassword
+  );
+
+  return changePassword;
+}
+
 module.exports = {
   login,
   registerCustomer,
+  changePassword,
 };
