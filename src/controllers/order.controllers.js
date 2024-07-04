@@ -8,12 +8,12 @@ async function processOrder(req, res) {
   try {
     const { order_id, fullname, telephone, shipping_cost, products } = req.body;
 
-    const itemDetails = products.map((product) => ({
-      id: product.id,
-      name: product.name,
-      quantity: product.quantity,
-      price: product.price,
-    }));
+    // const itemDetails = products.map((product) => ({
+    //   id: product.id,
+    //   name: product.name,
+    //   quantity: product.quantity,
+    //   price: product.price,
+    // }));
 
     const totalItemPrice = products.reduce(
       (acc, product) => acc + product.quantity * product.price,
@@ -41,11 +41,6 @@ async function processOrder(req, res) {
         phone: telephone,
       },
       enabled_payments: ["bca_va", "bni_va", "bri_va", "cimb_va", "other_va"],
-      callbacks: {
-        finish: `${URL.FRONT_END_URL}/order-status?order_id=${order_id}`,
-        error: `${URL.FRONT_END_URL}/order-status?order_id=${order_id}`,
-        pending: `${URL.FRONT_END_URL}/order-status?order_id=${order_id}`,
-      },
     };
 
     const transaction = await snap.createTransaction(parameter);
@@ -67,11 +62,9 @@ async function createOrder(req, res) {
     const {
       id,
       customer_id,
+      shipping_id,
       total_price,
       status,
-      shipping_status,
-      shipping_type,
-      shipping_cost,
       payment_method,
       va_number,
       bank,
@@ -81,11 +74,9 @@ async function createOrder(req, res) {
     const order = await orderServices.createOrder({
       id,
       customer_id: parseInt(customer_id),
+      shipping_id,
       total_price: parseFloat(total_price),
       status,
-      shipping_status,
-      shipping_type,
-      shipping_cost,
       payment_method,
       va_number,
       bank,
@@ -103,12 +94,29 @@ async function createOrder(req, res) {
       status: "Failed",
       message: "Internal server error",
     });
+    console.log(err);
   }
 }
 
 async function getOrders(req, res) {
   try {
     const result = await orderServices.getOrders(req.query);
+    res.status(200).json({
+      status: "Success",
+      data: result,
+    });
+  } catch (err) {
+    logger.error({ status: 500, error: err });
+    res.status(500).json({
+      status: "Failed",
+      message: "Internal server error",
+    });
+  }
+}
+
+async function getOrderByDate(req, res) {
+  try {
+    const result = await orderServices.getOrderByDate(req.query);
     res.status(200).json({
       status: "Success",
       data: result,
@@ -226,9 +234,10 @@ async function getOrderByCustomerId(req, res) {
 async function updateOrderStatus(req, res) {
   try {
     const { id } = req.params;
-    const { newStatus, shipping_status } = req.body;
+    const { shipping_id, newStatus, shipping_status } = req.body;
     const result = await orderServices.updateOrderStatus(
       id,
+      shipping_id,
       newStatus,
       shipping_status
     );
@@ -250,6 +259,7 @@ module.exports = {
   processOrder,
   createOrder,
   getOrders,
+  getOrderByDate,
   getOrderByStatus,
   getOrderStatusById,
   getTransactionStatus,
