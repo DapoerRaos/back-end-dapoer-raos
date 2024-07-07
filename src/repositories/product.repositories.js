@@ -14,6 +14,11 @@ async function getProducts({ page, keyword }) {
             [Op.iLike]: `%${keyword}%`,
           },
         },
+        {
+          "$Category.name$": {
+            [Op.iLike]: `%${keyword}%`,
+          },
+        },
       ],
     },
   ];
