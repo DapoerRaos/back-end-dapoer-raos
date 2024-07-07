@@ -6,6 +6,7 @@ const cartRepositories = require("./cart.repositories");
 const cartDetailRepositories = require("./cartDetail.repositories");
 const orderRepositories = require("./order.repositories");
 const orderItemRepositories = require("./orderItem.repositories");
+const shippingRepositories = require("./shipping.repositories");
 
 module.exports = {
   userRepositories,
@@ -16,4 +17,5 @@ module.exports = {
   cartDetailRepositories,
   orderRepositories,
   orderItemRepositories,
+  shippingRepositories,
 };
