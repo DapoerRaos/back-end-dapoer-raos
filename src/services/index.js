@@ -7,6 +7,8 @@ const cartServices = require("./cart.services");
 const cartDetailServices = require("./cartDetail.services");
 const orderServices = require("./order.services");
 const orderItemServices = require("./orderItem.services");
+const shippingServices = require("./shipping.services");
+const rajaOngkirServices = require("./rajaOngkir.services");
 
 module.exports = {
   authServices,
@@ -18,4 +20,6 @@ module.exports = {
   cartDetailServices,
   orderServices,
   orderItemServices,
+  shippingServices,
+  rajaOngkirServices,
 };
