@@ -17,9 +17,9 @@ async function getCustomers() {
       [col("User.email"), "email"],
       "fullname",
       "telephone",
-      "address",
-      "city",
-      "postal_code",
+      // "address",
+      // "city",
+      // "postal_code",
     ],
     include: {
       model: userModel,
@@ -39,9 +39,9 @@ async function getCustomerById(id) {
       [col("User.password"), "password"],
       "fullname",
       "telephone",
-      "address",
-      "city",
-      "postal_code",
+      // "address",
+      // "city",
+      // "postal_code",
     ],
     where: {
       user_id: id,
@@ -64,9 +64,9 @@ async function getCustomerDetailById(id) {
       [col("User.password"), "password"],
       "fullname",
       "telephone",
-      "address",
-      "city",
-      "postal_code",
+      // "address",
+      // "city",
+      // "postal_code",
     ],
     where: {
       id: id,
@@ -81,8 +81,8 @@ async function getCustomerDetailById(id) {
 }
 
 async function updateCustomerById(id, data) {
-  const { email, password, fullname, telephone, address, city, postal_code } =
-    data;
+  // address, city, postal_code
+  const { email, password, fullname, telephone } = data;
 
   await userModel.update(
     {
@@ -100,9 +100,9 @@ async function updateCustomerById(id, data) {
     {
       fullname,
       telephone,
-      address,
-      city,
-      postal_code,
+      // address,
+      // city,
+      // postal_code,
     },
     {
       where: {
