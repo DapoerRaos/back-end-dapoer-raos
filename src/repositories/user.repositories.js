@@ -13,8 +13,8 @@ async function getUserById(id) {
 }
 
 async function createCustomer(data) {
-  const { email, password, fullname, telephone, address, city, postal_code } =
-    data;
+  // address, city, postal_code
+  const { email, password, fullname, telephone } = data;
 
   const addUser = await userModel.create({
     email,
@@ -27,16 +27,30 @@ async function createCustomer(data) {
     user_id: userId,
     fullname,
     telephone,
-    address,
-    city,
-    postal_code,
+    // address,
+    // city,
+    // postal_code,
   });
 
   return { addUser, addCustomer };
+}
+
+async function changePassword(email, hashedPassword) {
+  return await userModel.update(
+    {
+      password: hashedPassword,
+    },
+    {
+      where: {
+        email: email,
+      },
+    }
+  );
 }
 
 module.exports = {
   getUserByEmail,
   getUserById,
   createCustomer,
+  changePassword,
 };
